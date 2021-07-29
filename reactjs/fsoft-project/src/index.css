@@ -1,10 +1,10 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
 code {
@@ -124,19 +124,19 @@ html, body {
   border-radius: 5px;
   font-size: 1.4rem;
   border: 1px solid #ccc;
+  cursor: default;
 }
 
-.form-submit[disabled] {
-  cursor: default;
+.form-submit:not([disabled]) {
+  background-color: #de611e;
+  color: #fff;
+  cursor: pointer;
 }
 
 .form-option {
   margin-top: 1.4rem;
   font-size: 1.4rem;
-}
-
-.form-option-link {
-  text-decoration: none;
+  cursor: pointer;
   color: #259ad2;
   float: right;
 }
@@ -147,12 +147,6 @@ html, body {
 
 .form-group.invalid .form-message {
   color: #f33a58;
-}
-
-.form-submit.activate {
-  background-color: #de611e;
-  color: #fff;
-  cursor: pointer;
 }
 
 /* Tablet */
@@ -218,18 +212,19 @@ html, body {
 }
 
 .logout,
-.user {
+.user-title {
   margin: 0 8px;
-}
-
-.logout-link,
-.user-link {
   color: #fff;
   text-decoration: none;
   font-size: 1.4rem;
+
 }
 
-.user-link {
+.logout {
+  cursor: pointer;
+}
+
+.user-title{
   font-weight: 200;
 }
 
@@ -241,6 +236,9 @@ html, body {
   font-weight: 400;
   color: #328832;
   background-color: rgba(0, 0, 0, 0.2);
+  transform-origin: top;
+  transition: all 1s ease;
+  animation: growDown 0.5s ease;
   display: none;
 }
 
@@ -251,13 +249,17 @@ html, body {
 
 .table-title {
   text-align: left;
-  padding: 4rem 0 2rem 0;
+  padding: 2rem 0 2rem 0;
   font-size: 2rem;
   font-weight: 400;
 }
 
+.sort-icon {
+  padding-left: 4px;
+}
+
 .table-btn {
-  padding: 4rem 0 2rem 0;
+  padding: 2rem 0 2rem 0;
   text-align: center;
 }
 
@@ -323,7 +325,7 @@ html, body {
   display: flex;
   justify-content: center;
   background-color: #fff;
-  padding: 5rem 0;
+  padding: 0 0 2rem;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -332,39 +334,40 @@ html, body {
 
 .paging-btn {
   padding: 4px 12px;
+  border: none;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   font-size: 1.2rem;
   font-weight: 500;
+  cursor: pointer;
   color: #333;
+  background-color: #fff;
 }
 
 .paging-btn:last-child {
   border-right: 1px solid #ccc;
 }
 
-.paging-btn-link {
-  text-decoration: none;
-}
 
-.paging-btn.enabled .paging-btn-link {
+.paging-btn:not([disabled]) {
   color: #2878d4;
   cursor: pointer;
 }
 
-.paging-btn.disabled .paging-btn-link {
+.paging-btn[disabled] {
+  color: #ccc;
   cursor: default;
 }
 
-.paging-btn:hover:not(.disabled),
+.paging-btn:hover:not([disabled]),
 .paging-btn.chosen {
   cursor: pointer;
   background-color: #2878d4;
 }
 
-.paging-btn:hover:not(.disabled) .paging-btn-link,
-.paging-btn.chosen .paging-btn-link {
+.paging-btn:hover:not([disabled]) ,
+.paging-btn.chosen {
   color: #fff;
 }
 
@@ -378,11 +381,11 @@ html, body {
 
 /* Pop-up */
 .pop-up {
-  display: none;
-}
-
-.pop-up-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
+  width: inherit;
   width: 100%;
   height: 100%;
   top: 0;
@@ -393,16 +396,16 @@ html, body {
   cursor: pointer;
   backdrop-filter: blur(1px);
   z-index: 2;
+  display: none;  
 }
 
 .pop-up-box {
-  position: absolute;
   width: 40rem;
   height: 12rem;
-  top: 100%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white !important;
+  transform: translateY(-50%);
+  background-color: #fff;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -440,7 +443,7 @@ html, body {
 .directory {
   width: 100%;
   text-align-last: left;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 500;
   color: blue;
   padding: 36px;
@@ -495,7 +498,6 @@ html, body {
 .handle-form-msg {
   font-size: 1.2rem;
   padding: 1rem 0 0 20rem;
-  display: none;
 }
 
 .handle-form-group.invalid .handle-form-control {
@@ -513,4 +515,13 @@ html, body {
 
 .btn-l {
   padding: 12px 36px;
+}
+
+@keyframes growDown {
+  from {
+    transform: scaleY(0)
+  }
+  to {
+    transform: scaleY(1)
+  }
 }

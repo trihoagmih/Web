@@ -1,115 +1,84 @@
 import React from 'react'
+import Table from './Table'
+import { useState } from 'react'
+import Add from './Add'
+import Update from './Update'
+import { BrowserRoute as Router, Route } from 'react-router-dom'
 
-const Homepage = () => {
+const Homepage = ({ user, patients, onLogout, deletePatient, addPatient, updatePatient }) => {
+    const [addState, setAddState] = useState(false)
+    const [updateState, setUpdateState] = useState(false)
+    const [patientToUpdate, setPatientToUpdate] = useState({})
+    
+    const Adding = (e) => {
+        setAddState(true)
+    }
+    const onCancel = (e) => {
+        if(addState) {
+            setAddState(false)
+        }
+        if(updateState) {
+            setUpdateState(false)
+        }
+    }
+    
+    const Updating = (patient) => {
+        setPatientToUpdate(patient)
+        setUpdateState(true)
+    }
+
+    const isNameRequired = (e) => {
+        const errElement = e.target.parentElement
+        const msg = errElement.querySelector('.handle-form-msg')
+        const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+        if(!e.target.value) {
+            msg.innerHTML = 'The field is required'
+            errElement.classList.add('invalid')
+        } else {
+            if (regex.test(e.target.value)) {
+                msg.innerHTML = ''
+                errElement.classList.remove('invalid')
+            } else {
+                msg.innerHTML = 'Invalid'
+                errElement.classList.add('invalid')
+            }
+        }
+    }
+    
+    const isEmailRequired = (e) => {
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const errElement = e.target.parentElement
+        const msg = errElement.querySelector('.handle-form-msg')
+        if(!e.target.value) {
+            msg.innerHTML = 'The field is required'
+            errElement.classList.add('invalid')
+        } else {
+            if (regex.test(e.target.value)) {
+                msg.innerHTML = ''
+                errElement.classList.remove('invalid')
+            } else {
+                msg.innerHTML = 'Please enter a valid email address'
+                errElement.classList.add('invalid')
+            }
+        }
+    }
+   
+    
+
     return (
         <div className="homepage">
             <nav className="nav">
-                <div className="user">
-                    <a href="/" className="user-link">Minh Tri</a>
+                <div className="user-title">
+                    {user ? user.username : ''}
                 </div>
-                <div className="logout">
-                    <a href className="logout-link">Logout</a>
+                <div className="logout" onClick={() => onLogout(user.id)}>
+                    Logout
                 </div>
             </nav>
-            <div className="banner-msg">
-                The patient has been deleted.
-            </div>
-            <div className="pop-up">
-                <div className="pop-up-overlay" />
-                <div className="pop-up-box">
-                    <div className="pop-up-msg">
-                        Are you sure you want to delete this patient?
-                    </div>
-                    <div className="pop-up-btn">
-                        <button className="btn btn-ok">OK</button>
-                        <button className="btn btn-cancel">Cancel</button>
-                    </div>
-                </div>
-            </div>
-            <table className="table">
-                <thead className="table-header">
-                    <tr>
-                        <th className="table-title" colSpan={5}>List Patients</th>
-                        <th className="table-btn">
-                            <button className="btn btn-add">
-                                Add Patients
-                            </button>
-                        </th>
-                    </tr>
-                    <tr className="row">
-                        <th className="row-header">ID</th>
-                        <th className="row-header">Title</th>
-                        <th className="row-header">First Name</th>
-                        <th className="row-header">Last Name</th>
-                        <th className="row-header">Email</th>
-                        <th className="row-header"/>
-                    </tr>
-                </thead>
-                <tbody className="table-body">
-                    <tr className="row">
-                        <td className="row-content">1</td>
-                        <td className="row-content">ms</td>
-                        <td className="row-content">Hoa</td>
-                        <td className="row-content">Phan</td>
-                        <td className="row-content">hoaphan.pt36@gmail.com</td>
-                        <td className="row-content">
-                            <button className="btn btn-del">Delete</button>
-                            <button className="btn btn-upd">Update</button>
-                        </td>
-                    </tr>
-                    <tr className="row">
-                        <td className="row-content">2</td>
-                        <td className="row-content">mr</td>
-                        <td className="row-content">Hoa</td>
-                        <td className="row-content">Phan</td>
-                        <td className="row-content">hoaphan.pt36@gmail.com</td>
-                        <td className="row-content">
-                            <button className="btn btn-del">Delete</button>
-                            <button className="btn btn-upd">Update</button>
-                        </td>
-                    </tr>
-                    <tr className="row">
-                        <td className="row-content">3</td>
-                        <td className="row-content">ms</td>
-                        <td className="row-content">Hoa</td>
-                        <td className="row-content">Phan</td>
-                        <td className="row-content">hoaphan.pt36@gmail.com</td>
-                        <td className="row-content">
-                            <button className="btn btn-del">Delete</button>
-                            <button className="btn btn-upd">Update</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <footer className="paging">
-                <div className="paging-btn disabled">
-                    <a href className="paging-btn-link">First</a>
-                </div>
-                <div className="paging-btn disabled">
-                    <a href className="paging-btn-link">Previous</a>
-                </div>
-                <div className="paging-btn enabled chosen">
-                    <a href className="paging-btn-link">1</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">2</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">3</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">4</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">5</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">Next</a>
-                </div>
-                <div className="paging-btn enabled">
-                    <a href className="paging-btn-link">Last</a>
-                </div>
-            </footer>
+            {/* Toi uu hon viec hien banner */}
+            <div className="banner-msg"></div>
+            {!addState ? (updateState ? <Update onCancel={onCancel} onUpdate={updatePatient} patientToUpdate={patientToUpdate} setUpdateState={setUpdateState} isEmailRequired={isEmailRequired} isNameRequired={isNameRequired}/> : <Table Adding={Adding} Updating={Updating} Deleting={deletePatient} patients={patients}/>) :<Add onCancel={onCancel} onAdd={addPatient} setAddState={setAddState} isEmailRequired={isEmailRequired} isNameRequired={isNameRequired}/>}
+            
         </div>
     )
 }

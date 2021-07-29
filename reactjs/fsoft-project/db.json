@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "trihm",
+      "password": "1234qwer!",
+      "isLoggedIn": false
+    },
+    {
+      "id": 2,
+      "username": "trihm9",
+      "password": "1234qwer!",
+      "isLoggedIn": true
+    },
+    {
+      "username": "trihm123",
+      "password": "1234qwer!",
+      "isLoggedIn": false,
+      "id": 3
+    },
+    {
+      "username": "phat123",
+      "password": "1234qwer!",
+      "isLoggedIn": false,
+      "id": 4
+    },
+    {
+      "username": "trihm12",
+      "password": "1234qwer!",
+      "isLoggedIn": false,
+      "id": 5
+    }
+  ],
+  "patients": [
+    {
+      "title": "Mr",
+      "first_name": "Tri",
+      "last_name": "Hoang",
+      "email": "trihm@gmail.com",
+      "id": 1
+    }
+  ]
+}
